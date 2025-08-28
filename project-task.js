@@ -33,7 +33,7 @@ const readlineSync = require('readline-sync');
 let animals = [];
 let fees = [];
 function addAnimal(name, fee) {
-    if (!name || fee < 0) {
+    if (!name || fee < 0) { // if the user provides a negative adoption fee or leaves the name blank
         throw new Error("Invalid animal name or adoption fee!");
     }
     animals.push(name);
@@ -41,7 +41,7 @@ function addAnimal(name, fee) {
 }
 function getAdoptionFee(animalName) {
     let index = animals.indexOf(animalName);
-    if (index === -1) {
+    if (index === -1) { // if the user tries to find the fee for an animal that hasn’t been added
         throw new Error("Animal not found in records!");
     }
     return fees[index];
@@ -62,14 +62,14 @@ while (true) {
             addAnimal(animal, fee);
             console.log(`${animal} added with a fee of $${fee}.`);
         } catch (err) {
-            console.log(`Animal name or fee amount is invalid.`);
+            console.log(err);
         }
     } else if (action === "fee") {
         let animal = readlineSync.question("Enter the animal's name to find its adoption fee: ");
         try {
             console.log(`${animal}'s adoption fee is $${getAdoptionFee(animal)}.`);
         } catch (err) {
-            console.log(`No animal exists by that name in the records.`);
+            console.log(err);
         }  
     } else {
         console.log("Invalid action. Please choose 'add', 'fee', or 'exit'.");
